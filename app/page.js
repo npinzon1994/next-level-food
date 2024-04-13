@@ -1,14 +1,13 @@
 import classes from "./page.module.css";
 import Link from "next/link";
-import Image from "next/image";
-import burgerImg from "../assets/burger.jpg";
+import ImageSlideshow from "@/components/main-header/images/image-slideshow";
 
 export default function Home() {
   return (
     <>
       <header className={classes.header}>
         <div className={classes.slideshow}>
-          {/* <Image src={burgerImg} alt="A juicy burger" /> */}
+          <ImageSlideshow />
         </div>
         <div>
           <div className={classes.hero}>
