@@ -1,9 +1,16 @@
 import { getMeal } from "@/lib/meals";
 import classes from "./page.module.css";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export default function MealDetailsPage({ params }) {
   const meal = getMeal(params.mealSlug);
+
+  //we might want to show a different "not-found" page
+  //that is more specific to the meal details page
+  if(!meal) {
+    notFound(); //shows the closest "not-found" or "error" page
+  }
 
   //formatting the instructions to include line breaks because
   //line breaks are ignored when fetching from DB
