@@ -2,9 +2,26 @@ import Link from "next/link";
 import classes from "./page.module.css";
 import MealsGrid from "@/components/meals/meals-grid";
 import { getMeals } from "@/lib/meals";
+import { Suspense } from "react";
 
-export default async function MealsPage() {
+/*
+This component is for the meal data fetching logic.
+
+We want to isolate this logic from the rest of the page
+so we can target this specific part of the page to show
+a loading state.
+
+This way, the header will be shown instantly to the user
+while the loading indicator is shown only in place of the
+to-be-rendered meal items.
+*/
+async function Meals() {
   const meals = await getMeals(); //getMeals returns a promise
+  return <MealsGrid meals={meals} />;
+}
+
+export default function MealsPage() {
+  const fallback = <p className={classes.loading}>Fetching meals...</p>;
   
   return (
     <>
@@ -22,7 +39,9 @@ export default async function MealsPage() {
       </header>
 
       <main className={classes.main}>
-        <MealsGrid meals={meals} />
+        <Suspense fallback={fallback}>
+          <Meals />
+        </Suspense>
       </main>
     </>
   );
