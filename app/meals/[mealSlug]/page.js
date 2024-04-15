@@ -3,12 +3,20 @@ import classes from "./page.module.css";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata({ params }) {
+  const meal = getMeal(params.mealSlug);
+  return {
+    title: meal.title,
+    description: meal.summary,
+  };
+}
+
 export default function MealDetailsPage({ params }) {
   const meal = getMeal(params.mealSlug);
 
   //we might want to show a different "not-found" page
   //that is more specific to the meal details page
-  if(!meal) {
+  if (!meal) {
     notFound(); //shows the closest "not-found" or "error" page
   }
 
@@ -20,7 +28,11 @@ export default function MealDetailsPage({ params }) {
     <>
       <header className={classes.header}>
         <div className={classes.image}>
-          <Image src={`https://next-level-food-user-uploaded-images.s3.amazonaws.com/${meal.image}`} alt={meal.title} fill />
+          <Image
+            src={`https://next-level-food-user-uploaded-images.s3.amazonaws.com/${meal.image}`}
+            alt={meal.title}
+            fill
+          />
         </div>
         <div className={classes.headerText}>
           <h1>{meal.title}</h1>
