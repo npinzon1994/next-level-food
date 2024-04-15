@@ -5,6 +5,11 @@ import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }) {
   const meal = getMeal(params.mealSlug);
+  
+  if(!meal) {
+    notFound();
+  }
+  
   return {
     title: meal.title,
     description: meal.summary,
